@@ -45,5 +45,5 @@ NB: in the current implementation lhapdf are not needed, but who knows!
 
 Calculate cross section/efficiency scale
 
-
+    root -l Calculate.cxx
 
