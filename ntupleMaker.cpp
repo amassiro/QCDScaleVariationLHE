@@ -74,9 +74,6 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
   std::vector<TLorentzVector> v_f_leptons ;
   std::vector<TLorentzVector> v_f_neutrinos ;
 
-  int nele = 0 ;
-  int nmu = 0 ;
-
   // loop over particles in the event
   // and fill the variables of leptons and quarks
   for (int iPart = 0 ; iPart < reader.hepeup.IDUP.size (); ++iPart) {
@@ -106,7 +103,7 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
        ) ;
      v_f_quarks.push_back (dummy) ;
     } // quarks
-    else if (abs (reader.hepeup.IDUP.at (iPart)) == 11 || abs (reader.hepeup.IDUP.at (iPart)) == 13) {  // e = 11,   mu = 13
+    else if (abs (reader.hepeup.IDUP.at (iPart)) == 11 || abs (reader.hepeup.IDUP.at (iPart)) == 13 || abs (reader.hepeup.IDUP.at (iPart)) == 15) {  // e = 11,   mu = 13,   tau = 15
      TLorentzVector dummy (
        reader.hepeup.PUP.at (iPart).at (0), // px
        reader.hepeup.PUP.at (iPart).at (1), // py
@@ -114,10 +111,8 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
        reader.hepeup.PUP.at (iPart).at (3) // E
        ) ;
      v_f_leptons.push_back (dummy) ;
-     nele += (abs (reader.hepeup.IDUP.at (iPart)) == 11) ;
-     nmu  += (abs (reader.hepeup.IDUP.at (iPart)) == 13) ;
     }
-    else if (abs (reader.hepeup.IDUP.at (iPart)) == 12 || abs (reader.hepeup.IDUP.at (iPart)) == 14) { // ve = 12,   vmu = 14
+    else if (abs (reader.hepeup.IDUP.at (iPart)) == 12 || abs (reader.hepeup.IDUP.at (iPart)) == 14 || abs (reader.hepeup.IDUP.at (iPart)) == 16) { // ve = 12,   vmu = 14,   vtau = 16
      TLorentzVector dummy
        (
        reader.hepeup.PUP.at (iPart).at (0), // px
@@ -130,24 +125,11 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
    } // outgoing particles
   } // loop over particles in the event
 
-  if (v_f_quarks.size () < 2) {
-   std::cout << " what !?!?!?! Not 2 jets? Are you kidding?" << std::endl;
-   continue;
-  }
   if (v_f_leptons.size () != 2) {
    std::cout << " what !?!?!?! Not 2 leptons? Are you kidding?" << std::endl;
    continue;
   }
 
-  if (nele + nmu != 2) {
-   std::cerr << "warning strange things happen\n" ;
-   continue ;
-  }
-
-  int isSF = -1 ;
-  if      (nele < 2 && nmu < 2)         isSF = 0 ;
-  else if ((nele == 2) || (nmu == 2))   isSF = 1 ;
-  else                              std::cerr << "warning strange things happen\n" ;
 
   // sorting in pt
   sort (v_f_quarks.rbegin (), v_f_quarks.rend (), ptsort ()) ;
@@ -159,11 +141,15 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
   TLorentzVector dilepton_plus_dineutrinos = v_f_leptons.at (0) + v_f_leptons.at (1) + v_f_neutrinos.at (0) + v_f_neutrinos.at (1) ;
 
   // the sum pf the two quarks
-  TLorentzVector dijet = v_f_quarks.at (0) + v_f_quarks.at (1) ;
+
+  float jetpt1 = -99;
+  if (v_f_quarks.size()>0) jetpt1 = v_f_quarks.at (0).Pt ();
+  float jetpt2 = -99;
+  if (v_f_quarks.size()>1) jetpt2 = v_f_quarks.at (1).Pt ();
 
   ntuple.Fill (
-    v_f_quarks.at (0).Pt (),
-    v_f_quarks.at (1).Pt (),
+    jetpt1,
+    jetpt2,
     v_f_leptons.at (0).Pt (),
     v_f_leptons.at (1).Pt ()
     ) ;
