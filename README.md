@@ -47,3 +47,22 @@ Calculate cross section/efficiency scale
 
     root -l Calculate.cxx
 
+Calculate as a function of pt threshold
+
+    root -l CalculatePtThreshold.cxx
+
+Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
+
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_05_05/pwgevents.lhe      f0505.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_05_10/pwgevents.lhe      f0510.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_05/pwgevents.lhe      f1005.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_10/pwgevents.lhe      f1010.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_20/pwgevents.lhe      f1020.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_20_10/pwgevents.lhe      f2010.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_20_20/pwgevents.lhe      f2020.root
+
+    root -l CalculatePOWHEG.cxx
+
+
+
+

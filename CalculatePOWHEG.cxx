@@ -1,10 +1,21 @@
 {
- TFile* fUp = new TFile ("up.root");
- TFile* fCe = new TFile ("cen.root");
- TFile* fDo = new TFile ("down.root");
- TTree* tUp = (TTree*) fUp -> Get ("ntu");
- TTree* tCe = (TTree*) fCe -> Get ("ntu");
- TTree* tDo = (TTree*) fDo -> Get ("ntu");
+ #include <algorithm>
+
+ TFile* f0505 = new TFile ("f0505.root");
+ TFile* f0510 = new TFile ("f0510.root");
+ TFile* f1005 = new TFile ("f1005.root");
+ TFile* f1010 = new TFile ("f1010.root");
+ TFile* f1020 = new TFile ("f1020.root");
+ TFile* f2010 = new TFile ("f2010.root");
+ TFile* f2020 = new TFile ("f2020.root");
+
+ TTree* t0505 = (TTree*) f0505 -> Get ("ntu");
+ TTree* t0510 = (TTree*) f0510 -> Get ("ntu");
+ TTree* t1005 = (TTree*) f1005 -> Get ("ntu");
+ TTree* t1010 = (TTree*) f1010 -> Get ("ntu");
+ TTree* t1020 = (TTree*) f1020 -> Get ("ntu");
+ TTree* t2010 = (TTree*) f2010 -> Get ("ntu");
+ TTree* t2020 = (TTree*) f2020 -> Get ("ntu");
 
  Double_t X[200];
  Double_t Y_f0[200];
@@ -22,17 +33,29 @@
   TString s1 = Form ("jetpt1>=%f",threshold);
   TString s2 = Form ("jetpt2>=%f",threshold);
 
-  double c0 = 1. * tCe->GetEntries();
-  double c1 = 1. * tCe->GetEntries(s1.Data());
-  double c2 = 1. * tCe->GetEntries(s2.Data());
+  double c0 = 1. * t1010->GetEntries();
+  double c1 = 1. * t1010->GetEntries(s1.Data());
+  double c2 = 1. * t1010->GetEntries(s2.Data());
 
   double f0 = (c0-c1)/c0;
   double f1 = (c1-c2)/c0;
   double f2 = (c2)/c0;
 
-  double sigma0 = (tUp->GetEntries()-tDo->GetEntries() ) / (tUp->GetEntries()+tDo->GetEntries() );
-  double sigma1 = fabs(tUp->GetEntries(s1.Data())-tDo->GetEntries(s1.Data()) ) / fabs(tUp->GetEntries(s1.Data())+tDo->GetEntries(s1.Data()) ) ;
-  double sigma2 = fabs(tUp->GetEntries(s2.Data())-tDo->GetEntries(s2.Data()) ) / fabs(tUp->GetEntries(s2.Data())+tDo->GetEntries(s2.Data()) +1);
+  int xsec[100];
+
+  xsec[0] = t0505->GetEntries(s1.Data());
+  xsec[1] = t0510->GetEntries(s1.Data());
+  xsec[2] = t1005->GetEntries(s1.Data());
+  xsec[3] = t1020->GetEntries(s1.Data());
+  xsec[4] = t2010->GetEntries(s1.Data());
+  xsec[5] = t2020->GetEntries(s1.Data());
+
+  int min = *std::min_element(xsec,xsec+6);
+  int max = *std::max_element(xsec,xsec+6);
+
+  double sigma0 = 0.;
+  double sigma1 = 1.* abs(max-min) / c1;
+  double sigma2 = 0.;
 
  // k = exp (sigma)
   double k0 = exp(sigma0);
@@ -46,7 +69,7 @@
   double t12 = pow(k2,-f2/f1);
   double t22 = k2;
 
-  std::cout << " thr = " << threshold << " :: t01 = " << t01 << " t11 = " << t11 << " :: k0 = " << k0 << " k1 = " << k1 << " :: sigma0 = " << sigma0 << " sigma1 = " << sigma1 << std::endl;
+  std::cout << " thr = " << threshold << " :: t01 = " << t01 << " t11 = " << t11 << " :: k0 = " << k0 << " k1 = " << k1 << " :: sigma0 = " << sigma0 << " sigma1 = " << sigma1 << " = (" << max << " - " << min << " ) / " << c1 << std::endl;
   Y_t01[i] = t01;
   Y_t11[i] = t11;
   Y_error_0jet[i] = 1. - Y_t01[i];
@@ -54,6 +77,7 @@
   Y_sigma1[i] = sigma1;
   Y_f0[i] = f0;
   Y_f1[i] = f1;
+
  }
 
  //--------------------------
@@ -115,6 +139,5 @@
  g_f1->SetMarkerStyle(20);
  g_f1->SetMarkerColor(kRed);
  g_f1->Draw("apl");
-
 
 }

@@ -389,7 +389,8 @@ private:
     bool readingInit = false;
 
     // Make sure we are reading a LHEF file:
-    getline(); getline();
+//     getline();  ---> for MC@NLO
+    getline();
     if ( currentLine.find("<LesHouchesEvents" ) == std::string::npos )
       throw std::runtime_error
 	("Tried to read a file which does not start with the "
