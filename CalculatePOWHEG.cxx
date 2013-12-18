@@ -25,10 +25,11 @@
  Double_t Y_sigma0[200];
  Double_t Y_sigma1[200];
  Double_t Y_error_0jet[200];
+ Double_t Y_error_sigma_0jet[200];
 
  int n = 100;
  for (int i=0; i<n; i++) {
-  double threshold = 20+i;
+  double threshold = 25+i;
   X[i] = threshold;
   TString s1 = Form ("jetpt1>=%f",threshold);
   TString s2 = Form ("jetpt2>=%f",threshold);
@@ -77,8 +78,19 @@
   Y_sigma1[i] = sigma1;
   Y_f0[i] = f0;
   Y_f1[i] = f1;
-
+  Y_error_sigma_0jet[i] = sigma1*c1/(c0-c1);
  }
+
+ //--------------------------
+ TGraph* g_esigma0 = new TGraph(n,X,Y_error_sigma_0jet);
+
+ TCanvas* cesigma0 = new TCanvas ("cesigma0","cesigma0",800,600);
+ g_esigma0->SetMarkerSize(1);
+ g_esigma0->SetMarkerStyle(20);
+ g_esigma0->SetMarkerColor(kRed);
+ g_esigma0->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
+ g_esigma0->Draw("apl");
+
 
  //--------------------------
  TGraph* g_e0 = new TGraph(n,X,Y_error_0jet);
