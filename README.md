@@ -26,8 +26,8 @@ Dump sensitive information into a root file
     c++ -o ntupleMaker.exe `root-config --glibs --cflags` `lhapdf-config --cppflags  --ldflags` -lm ntupleMaker.cpp
     ./ntupleMaker.exe   blabla.lhe    blabla.root
 
-NB: in the current implementation lhapdf are not needed, but who knows!
 
+NB: in the current implementation lhapdf are not needed, but who knows!
 
     /WWTo2L2Nu_CT10_8TeV-mcatnlo/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM
     /WWTo2L2Nu_scaledown_CT10_8TeV-mcatnlo/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM
@@ -50,6 +50,16 @@ Calculate cross section/efficiency scale
 Calculate as a function of pt threshold
 
     root -l CalculatePtThreshold.cxx
+
+
+# POWHEG
+
+Generation
+
+     cd /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_05_05/
+     ../pwhg_main
+
+and do the same for all factorization/renormalization scale folders.
 
 Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
 
