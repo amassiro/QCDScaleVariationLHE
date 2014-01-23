@@ -61,6 +61,21 @@ Generation
 
 and do the same for all factorization/renormalization scale folders.
 
+Alternatively reweight one powheg production:
+
+ * in the first production do:
+
+    storeinfo_rwgt 1    ! to save in generation for reweight (0 after)
+    pdfreweight 1       ! (default 0) write extra pdf infos on LHEF
+
+ * then, after changing the renorm and fact scale (do a loop over different combinations):
+
+    storeinfo_rwgt 0    ! to save in generation for reweight (0 after)
+    pdfreweight 0       ! (default 0) write extra pdf infos on LHEF
+    compute_rwgt 1    ! to reweight after
+
+
+
 Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
 
     ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_05_05/pwgevents.lhe      f0505.root
@@ -72,6 +87,10 @@ Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
     ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_20_20/pwgevents.lhe      f2020.root
 
     root -l CalculatePOWHEG.cxx
+
+
+
+
 
 
 
