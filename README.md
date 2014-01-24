@@ -61,6 +61,10 @@ Generation
 
 and do the same for all factorization/renormalization scale folders.
 
+To clean a folder:
+
+    ls | grep -v powheg.input | awk '{print "rm "$1}'
+
 Alternatively reweight one powheg production:
 
  * in the first production do:
