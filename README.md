@@ -54,7 +54,19 @@ Calculate as a function of pt threshold
 
 # POWHEG
 
-Generation
+Compile:
+
+    first check "ReweightingStuff" README
+
+    export PATH=/home/amassiro/Generation/MINLO/install-fastjet-3.0.6/bin/:$PATH
+    export PATH=/home/amassiro/Generation/lhapdf/install-lhapdf-5.9.1/bin/:$PATH
+    export LD_LIBRARY_PATH=/home/amassiro/Generation/MINLO/install-fastjet-3.0.6/lib/:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/home/amassiro/Generation/lhapdf/install-lhapdf-5.9.1/lib/:$LD_LIBRARY_PATH
+    export LHAPATH=/home/amassiro/Generation/lhapdf/install-lhapdf-5.9.1/share/lhapdf/PDFsets
+
+    make
+
+Generation:
 
      cd /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_05_05/
      ../pwhg_main
@@ -76,7 +88,7 @@ Alternatively reweight one powheg production:
 
     storeinfo_rwgt 0    ! to save in generation for reweight (0 after)
     pdfreweight 0       ! (default 0) write extra pdf infos on LHEF
-    compute_rwgt 1    ! to reweight after
+    compute_rwgt 1      ! to reweight after
 
 
 
@@ -93,8 +105,10 @@ Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
     root -l CalculatePOWHEG.cxx
 
 
-
-
+fatto:
+    11
+    22
+    12
 
 
 
