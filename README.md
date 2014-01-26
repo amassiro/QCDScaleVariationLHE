@@ -110,6 +110,12 @@ fatto:
     22
     12
     21
+    01 (ongoing)
+
+manca
+
+    10
+    00
 
 
 
