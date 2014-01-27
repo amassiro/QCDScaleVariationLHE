@@ -110,12 +110,37 @@ fatto:
     22
     12
     21
-    01 (ongoing)
-
+    01 (ongoing)  --> never ending!!!
 manca
 
     10
     00
+
+
+Where:
+
+    /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_10_withDump_and_scales
+
+with
+
+    withdamp 1
+
+done:
+
+    11
+    22
+    12
+
+missing:
+
+    21
+    10
+    01 never ending
+    00 never ending
+
+
+
+
 
 
 
