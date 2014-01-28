@@ -105,10 +105,6 @@ Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
     root -l CalculatePOWHEG.cxx
 
 
-05-05
-05-10
-10-05 standalone still running!
-
 
 Where:
 
