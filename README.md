@@ -94,7 +94,7 @@ Alternatively reweight one powheg production:
 
 Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
 
-    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_05_05/pwgevents.lhe      f0505.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_09_09/pwgevents.lhe      f0505.root
     ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_05_10/pwgevents.lhe      f0510.root
     ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_05/pwgevents.lhe      f1005.root
     ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_10/pwgevents.lhe      f1010.root
@@ -105,16 +105,9 @@ Calculate with POWHEG (with matrix 2x/0.5x in fact and renorm same)
     root -l CalculatePOWHEG.cxx
 
 
-fatto:
-    11
-    22
-    12
-    21
-    01 (ongoing)  --> never ending!!!
-manca
-
-    10
-    00
+05-05
+05-10
+10-05 standalone still running!
 
 
 Where:
@@ -130,13 +123,13 @@ done:
     11
     22
     12
-
-missing:
-
     21
     10
-    01 never ending
-    00 never ending
+    01
+    00
+
+
+
 
 
 
