@@ -81,14 +81,14 @@ Alternatively reweight one powheg production:
 
  * in the first production do:
 
-    storeinfo_rwgt 1    ! to save in generation for reweight (0 after)
-    pdfreweight 1       ! (default 0) write extra pdf infos on LHEF
+        storeinfo_rwgt 1    ! to save in generation for reweight (0 after)
+        pdfreweight 1       ! (default 0) write extra pdf infos on LHEF
 
  * then, after changing the renorm and fact scale (do a loop over different combinations):
 
-    storeinfo_rwgt 0    ! to save in generation for reweight (0 after)
-    pdfreweight 0       ! (default 0) write extra pdf infos on LHEF
-    compute_rwgt 1      ! to reweight after
+        storeinfo_rwgt 0    ! to save in generation for reweight (0 after)
+        pdfreweight 0       ! (default 0) write extra pdf infos on LHEF
+        compute_rwgt 1      ! to reweight after
 
 
 
@@ -126,7 +126,26 @@ done:
 
 
 
+# 1M events generation
 
+Where:
+
+    /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_1M_events
+
+with
+
+    withdamp 1
+
+
+Configuration powheg.input here:
+
+    Configuration
+
+While scaling up/down do:
+
+    cp Configuration/powheg.input.POINT   powheg.input
+    mv pwgevents-rwgt.lhe pwgevents.lhe
+    ../pwhg_main
 
 
 
