@@ -48,6 +48,21 @@ TLorentzVector buildP (const LHEF::HEPEUP & event, int iPart) {
 }
 
 
+std::vector <std::string> transform (std::string inUglyList) {
+ std::vector <std::string> list_comments;
+ std::string s = inUglyList;
+ std::string delimiter = "#";
+ size_t pos = 0;
+ std::string token;
+ while ((pos = s.find(delimiter)) != std::string::npos) {
+  token = s.substr(0, pos);
+  list_comments.push_back(token);
+  s.erase(0, pos + delimiter.length());
+ }
+ return list_comments;
+}
+
+
 
 
 void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
@@ -64,6 +79,28 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
  while ( reader.readEvent () ) {
   ieve++;
   if (ieve % 10000 == 0) std::cout << "event " << ieve << "\n" ;
+
+  //----                mu      mu    weight
+  std::map < std::pair<float, float>, float > weights;
+  std::vector <std::string> comments_LHE = transform (reader.eventComments);
+
+  //----                    0 is somethig I don't care:     rwgt            1           3  0.404994932416933         54217137   634096161           0
+  for (unsigned int iComm = 1; iComm < comments_LHE.size(); iComm++) {
+  /// #new weight,renfact,facfact,pdf1,pdf2 32.2346904790193 1.00000000000000 1.00000000000000 11000 11000 lha
+   std::stringstream line( comments_LHE.at(iComm) );
+   std::string dummy;
+   line >> dummy; // new weight,renfact,facfact,pdf1,pdf2
+   line >> dummy;
+   float dummy_float_weight;
+   line >> dummy_float_weight; // 32.2346904790193
+   float dummy_float_mu1;
+   line >> dummy_float_mu1; // 1.00000000000000
+   float dummy_float_mu2;
+   line >> dummy_float_mu2; // 1.00000000000000
+   std::pair <float, float> mumu(dummy_float_mu1,dummy_float_mu2);
+   weights[mumu] = dummy_float_weight;
+  }
+
 
   TLorentzVector Higgs;
   int iPartHiggs = -1;
@@ -150,8 +187,14 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
   ntuple.Fill (
     jetpt1,
     jetpt2,
-    v_f_leptons.at (0).Pt (),
-    v_f_leptons.at (1).Pt ()
+//     v_f_leptons.at (0).Pt (),
+//     v_f_leptons.at (1).Pt ()
+    weights[std::pair<float, float>(0.5, 0.5)],
+    weights[std::pair<float, float>(1.0, 0.5)],
+    weights[std::pair<float, float>(0.5, 1.0)],
+    weights[std::pair<float, float>(1.0, 2.0)],
+    weights[std::pair<float, float>(2.0, 1.0)],
+    weights[std::pair<float, float>(2.0, 2.0)]
     ) ;
 
  } // loop over events
@@ -177,7 +220,8 @@ int main (int argc, char **argv) {
  LHAPDF::initPDF (0) ;
 
 
- TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:pt1:pt2");
+//  TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:pt1:pt2");
+ TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:w00:w10:w01:w12:w21:w22");
  fillNtuple (argv[1], ntu) ;
 
  TFile output (argv[2], "recreate") ;
