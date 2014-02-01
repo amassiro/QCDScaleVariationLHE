@@ -148,8 +148,10 @@ While scaling up/down do:
     ../pwhg_main
 
 
+with weights:
+
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_10_withDump_and_scales/pwgevents.lhe      test.root
 
 
-
-
+    root -l CalculatePOWHEGOneSample.cxx
 

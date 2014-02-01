@@ -1,21 +1,9 @@
 {
  #include <algorithm>
 
- TFile* f0505 = new TFile ("f0505.root");
- TFile* f0510 = new TFile ("f0510.root");
- TFile* f1005 = new TFile ("f1005.root");
- TFile* f1010 = new TFile ("f1010.root");
- TFile* f1020 = new TFile ("f1020.root");
- TFile* f2010 = new TFile ("f2010.root");
- TFile* f2020 = new TFile ("f2020.root");
+ TFile* f = new TFile ("fAll.root");
 
- TTree* t0505 = (TTree*) f0505 -> Get ("ntu");
- TTree* t0510 = (TTree*) f0510 -> Get ("ntu");
- TTree* t1005 = (TTree*) f1005 -> Get ("ntu");
- TTree* t1010 = (TTree*) f1010 -> Get ("ntu");
- TTree* t1020 = (TTree*) f1020 -> Get ("ntu");
- TTree* t2010 = (TTree*) f2010 -> Get ("ntu");
- TTree* t2020 = (TTree*) f2020 -> Get ("ntu");
+ TTree* t = (TTree*) f -> Get ("ntu");
 
  Double_t X[200];
  Double_t Y_f0[200];
@@ -27,13 +15,13 @@
  Double_t Y_error_0jet[200];
  Double_t Y_error_sigma_0jet[200];
 
- std::cout << " total Events: 0505 = " << t0505->GetEntries() << std::endl;
- std::cout << " total Events: 0510 = " << t0510->GetEntries() << std::endl;
- std::cout << " total Events: 1005 = " << t1005->GetEntries() << std::endl;
- std::cout << " total Events: 1010 = " << t1010->GetEntries() << std::endl;
- std::cout << " total Events: 2010 = " << t2010->GetEntries() << std::endl;
- std::cout << " total Events: 1020 = " << t1020->GetEntries() << std::endl;
- std::cout << " total Events: 2020 = " << t2020->GetEntries() << std::endl;
+ t->Draw("1 >> htemp(10,0,2)","w00","goff");  std::cout << " total Events: 0505 = " << htemp->Integral() << std::endl;
+ t->Draw("1 >> htemp(10,0,2)","w01","goff");  std::cout << " total Events: 0510 = " << htemp->Integral() << std::endl;
+ t->Draw("1 >> htemp(10,0,2)","w10","goff");  std::cout << " total Events: 1005 = " << htemp->Integral() << std::endl;
+ t->Draw("1 >> htemp(10,0,2)","w11","goff");  std::cout << " total Events: 1010 = " << htemp->Integral() << std::endl;
+ t->Draw("1 >> htemp(10,0,2)","w12","goff");  std::cout << " total Events: 1020 = " << htemp->Integral() << std::endl;
+ t->Draw("1 >> htemp(10,0,2)","w21","goff");  std::cout << " total Events: 2010 = " << htemp->Integral() << std::endl;
+ t->Draw("1 >> htemp(10,0,2)","w22","goff");  std::cout << " total Events: 2020 = " << htemp->Integral() << std::endl;
 
  int n = 100;
  for (int i=0; i<n; i++) {
@@ -43,9 +31,9 @@
   TString s1 = Form ("jetpt1>=%f",threshold);
   TString s2 = Form ("jetpt2>=%f",threshold);
 
-  double c0 = 1. * t1010->GetEntries();
-  double c1 = 1. * t1010->GetEntries(s1.Data());
-  double c2 = 1. * t1010->GetEntries(s2.Data());
+  double c0 = 1. * t->GetEntries();
+  double c1 = 1. * t->GetEntries(s1.Data());
+  double c2 = 1. * t->GetEntries(s2.Data());
 
   double f0 = (c0-c1)/c0;
   double f1 = (c1-c2)/c0;
@@ -53,12 +41,12 @@
 
   int xsec[100];
 
-  xsec[0] = t0505->GetEntries(s1.Data());
-  xsec[1] = t0510->GetEntries(s1.Data());
-  xsec[2] = t1005->GetEntries(s1.Data());
-  xsec[3] = t1020->GetEntries(s1.Data());
-  xsec[4] = t2010->GetEntries(s1.Data());
-  xsec[5] = t2020->GetEntries(s1.Data());
+  TString s00 = Form ("(%s) >> htemp(10,0,2)",s1.Data());  t->Draw(s00.Data(),"w00","goff");  xsec[0] = htemp->Integral();
+  TString s01 = Form ("(%s) >> htemp(10,0,2)",s1.Data());  t->Draw(s01.Data(),"w01","goff");  xsec[1] = htemp->Integral();
+  TString s10 = Form ("(%s) >> htemp(10,0,2)",s1.Data());  t->Draw(s10.Data(),"w10","goff");  xsec[2] = htemp->Integral();
+  TString s12 = Form ("(%s) >> htemp(10,0,2)",s1.Data());  t->Draw(s12.Data(),"w12","goff");  xsec[3] = htemp->Integral();
+  TString s21 = Form ("(%s) >> htemp(10,0,2)",s1.Data());  t->Draw(s21.Data(),"w21","goff");  xsec[4] = htemp->Integral();
+  TString s22 = Form ("(%s) >> htemp(10,0,2)",s1.Data());  t->Draw(s22.Data(),"w22","goff");  xsec[5] = htemp->Integral();
 
   int min = *std::min_element(xsec,xsec+6);
   int max = *std::max_element(xsec,xsec+6);

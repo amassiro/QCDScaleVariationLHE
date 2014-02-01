@@ -194,7 +194,8 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
     weights[std::pair<float, float>(0.5, 1.0)],
     weights[std::pair<float, float>(1.0, 2.0)],
     weights[std::pair<float, float>(2.0, 1.0)],
-    weights[std::pair<float, float>(2.0, 2.0)]
+    weights[std::pair<float, float>(2.0, 2.0)],
+    weights[std::pair<float, float>(1.0, 1.0)]
     ) ;
 
  } // loop over events
@@ -221,7 +222,7 @@ int main (int argc, char **argv) {
 
 
 //  TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:pt1:pt2");
- TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:w00:w10:w01:w12:w21:w22");
+ TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:w00:w10:w01:w12:w21:w22:w11");
  fillNtuple (argv[1], ntu) ;
 
  TFile output (argv[2], "recreate") ;
