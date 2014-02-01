@@ -56,9 +56,10 @@ std::vector <std::string> transform (std::string inUglyList) {
  std::string token;
  while ((pos = s.find(delimiter)) != std::string::npos) {
   token = s.substr(0, pos);
-  list_comments.push_back(token);
+  if (pos != 0) list_comments.push_back(token);   //---- !=0 to remove first empty line
   s.erase(0, pos + delimiter.length());
  }
+ list_comments.push_back(s); //---- last one!
  return list_comments;
 }
 
@@ -84,19 +85,26 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
   std::map < std::pair<float, float>, float > weights;
   std::vector <std::string> comments_LHE = transform (reader.eventComments);
 
+//   std::cout << " comments_LHE.size() = " << comments_LHE.size() << std::endl;
+  for (unsigned int iComm = 0; iComm < comments_LHE.size(); iComm++) {
+//    std::cout << " i[" << iComm << "] = " << comments_LHE.at(iComm) << std::endl;
+  }
   //----                    0 is somethig I don't care:     rwgt            1           3  0.404994932416933         54217137   634096161           0
-  for (unsigned int iComm = 1; iComm < comments_LHE.size(); iComm++) {
-  /// #new weight,renfact,facfact,pdf1,pdf2 32.2346904790193 1.00000000000000 1.00000000000000 11000 11000 lha
+  //----                    1 is somethig I don't care:     pdf   3 -3 0.21541051E+00 0.32619889E-02 0.21206289E+03 0.12651286E-01 0.93895940E+00
+  for (unsigned int iComm = 2; iComm < comments_LHE.size(); iComm++) {
+  /// #new weight,renfact,facfact,pdf1,pdf2  0.604844179378303       0.500000000000000        1.00000000000000            11000       11000  lha
    std::stringstream line( comments_LHE.at(iComm) );
    std::string dummy;
-   line >> dummy; // new weight,renfact,facfact,pdf1,pdf2
-   line >> dummy;
+   line >> dummy; // new
+   line >> dummy; // weight,renfact,facfact,pdf1,pdf2
    float dummy_float_weight;
-   line >> dummy_float_weight; // 32.2346904790193
+   line >> dummy_float_weight; // 0.604844179378303
    float dummy_float_mu1;
-   line >> dummy_float_mu1; // 1.00000000000000
+   line >> dummy_float_mu1; // 0.500000000000000
+//    std::cout << " mu1 = " << dummy_float_mu1 << "    ";
    float dummy_float_mu2;
    line >> dummy_float_mu2; // 1.00000000000000
+//    std::cout << " mu2 = " << dummy_float_mu2 << std::endl;
    std::pair <float, float> mumu(dummy_float_mu1,dummy_float_mu2);
    weights[mumu] = dummy_float_weight;
   }
@@ -196,6 +204,7 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
     weights[std::pair<float, float>(2.0, 1.0)],
     weights[std::pair<float, float>(2.0, 2.0)],
     weights[std::pair<float, float>(1.0, 1.0)]
+//     1
     ) ;
 
  } // loop over events

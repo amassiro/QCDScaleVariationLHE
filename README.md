@@ -151,7 +151,8 @@ While scaling up/down do:
 with weights:
 
     ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_10_10_withDump_and_scales/pwgevents.lhe      test.root
-
+    ./ntupleMaker.exe   /tmp/amassiro//pwgevents.lhe      fAll.root
+    ./ntupleMaker.exe   /home/amassiro/Generation/MINLO/POWHEG-BOX/WW/testAM_1M_events/pwgevents-rwgt.lhe     fAll.root
 
     root -l CalculatePOWHEGOneSample.cxx
 

@@ -59,9 +59,10 @@
   xsec[3] = t1020->GetEntries(s1.Data());
   xsec[4] = t2010->GetEntries(s1.Data());
   xsec[5] = t2020->GetEntries(s1.Data());
+  xsec[6] = c1;
 
-  int min = *std::min_element(xsec,xsec+6);
-  int max = *std::max_element(xsec,xsec+6);
+  int min = *std::min_element(xsec,xsec+7);
+  int max = *std::max_element(xsec,xsec+7);
 
   double sigma0 = 0.;
   double sigma1 = 1.* abs(max-min) / c1;
