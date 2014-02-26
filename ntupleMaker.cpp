@@ -114,7 +114,7 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
   int iPartHiggs = -1;
   float mH = 0;
 
-  std::vector<int> finalJets ;
+  std::vector<TLorentzVector> v_f_quarks_and_gluons ;
   std::vector<TLorentzVector> v_f_quarks ;
   std::vector<TLorentzVector> v_f_leptons ;
   std::vector<TLorentzVector> v_f_neutrinos ;
@@ -139,7 +139,6 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
    if (reader.hepeup.ISTUP.at (iPart) == 1) {
     // quarks
     if (abs (reader.hepeup.IDUP.at (iPart)) < 7) {
-     finalJets.push_back (iPart) ;
      TLorentzVector dummy (
        reader.hepeup.PUP.at (iPart).at (0), // px
        reader.hepeup.PUP.at (iPart).at (1), // py
@@ -147,6 +146,7 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
        reader.hepeup.PUP.at (iPart).at (3) // E
        ) ;
      v_f_quarks.push_back (dummy) ;
+     v_f_quarks_and_gluons.push_back (dummy) ;
     } // quarks
     else if (abs (reader.hepeup.IDUP.at (iPart)) == 11 || abs (reader.hepeup.IDUP.at (iPart)) == 13 || abs (reader.hepeup.IDUP.at (iPart)) == 15) {  // e = 11,   mu = 13,   tau = 15
      TLorentzVector dummy (
@@ -167,6 +167,16 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
        ) ;
      v_f_neutrinos.push_back (dummy) ;
     }
+    else if (abs (reader.hepeup.IDUP.at (iPart)) == 21) { //---- gluons
+     TLorentzVector dummy (
+       reader.hepeup.PUP.at (iPart).at (0), // px
+       reader.hepeup.PUP.at (iPart).at (1), // py
+       reader.hepeup.PUP.at (iPart).at (2), // pz
+       reader.hepeup.PUP.at (iPart).at (3) // E
+                          ) ;
+     v_f_quarks_and_gluons.push_back (dummy) ;
+    }
+
    } // outgoing particles
   } // loop over particles in the event
 
@@ -177,6 +187,7 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
 
 
   // sorting in pt
+  sort (v_f_quarks_and_gluons.rbegin (), v_f_quarks_and_gluons.rend (), ptsort ()) ;
   sort (v_f_quarks.rbegin (), v_f_quarks.rend (), ptsort ()) ;
   sort (v_f_leptons.rbegin (), v_f_leptons.rend (), ptsort ()) ;
 
@@ -188,9 +199,9 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
   // the sum pf the two quarks
 
   float jetpt1 = -99;
-  if (v_f_quarks.size()>0) jetpt1 = v_f_quarks.at (0).Pt ();
+  if (v_f_quarks_and_gluons.size()>0) jetpt1 = v_f_quarks_and_gluons.at (0).Pt ();
   float jetpt2 = -99;
-  if (v_f_quarks.size()>1) jetpt2 = v_f_quarks.at (1).Pt ();
+  if (v_f_quarks_and_gluons.size()>1) jetpt2 = v_f_quarks_and_gluons.at (1).Pt ();
 
   ntuple.Fill (
     jetpt1,

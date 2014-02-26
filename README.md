@@ -162,7 +162,7 @@ with weights:
 Plot
 =======
 
-    r99t DrawDistribution.cxx\(\"jetpt1\",200,0,200,\"jetpt1\ [GeV]\"\)
+    r99t DrawDistribution.cxx\(\"jetpt1\",200,-200,200,\"jetpt1\ [GeV]\"\)
     r99t DrawDistribution.cxx\(\"jeteta1\",100,-5,5,\"jeteta1\"\)
 
 
