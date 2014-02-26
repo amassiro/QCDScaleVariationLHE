@@ -198,9 +198,9 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
 
   // the sum pf the two quarks
 
-  float jetpt1 = -99;
+  float jetpt1 = 0;
   if (v_f_quarks_and_gluons.size()>0) jetpt1 = v_f_quarks_and_gluons.at (0).Pt ();
-  float jetpt2 = -99;
+  float jetpt2 = 0;
   if (v_f_quarks_and_gluons.size()>1) jetpt2 = v_f_quarks_and_gluons.at (1).Pt ();
 
   ntuple.Fill (
