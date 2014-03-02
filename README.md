@@ -168,3 +168,38 @@ Plot
 
 
 
+
+PDF reweight
+=======
+
+First generate events with
+
+    storeinfo_rwgt 1
+
+and
+
+    pdfreweight 1
+
+
+then, once generated change input file 
+
+    lhans1 XXX
+    lhans2 XXX
+
+with the new pdf (lhapdf numbering from http://lhapdf.hepforge.org/pdfsets)
+
+after having commented
+
+    #storeinfo_rwgt 1
+
+and adding
+
+    compute_rwgt 1
+
+
+Now:
+
+    11062
+
+
+
