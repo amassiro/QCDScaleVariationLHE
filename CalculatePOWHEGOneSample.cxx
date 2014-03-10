@@ -118,6 +118,7 @@
  g_esigma0->SetMarkerColor(kRed);
  g_esigma0->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_esigma0->Draw("apl");
+ gPad->SetGrid();
 
 
  //--------------------------
@@ -129,9 +130,10 @@
  g_e0->SetMarkerColor(kRed);
  g_e0->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_e0->Draw("apl");
+ gPad->SetGrid();
 
  //--------------------------
- TGraph* g_t00 = new TGraph(n,X,Y_t00); g_t00->SetName("QCDScale");    g_t00->SetTitle("QCDScale");
+ TGraph* g_t00 = new TGraph(n,X,Y_t00); g_t00->SetName("QCDScale");    g_t00->SetTitle("QCDScale in 0 jet bin");
  TGraph* g_t01 = new TGraph(n,X,Y_t01); g_t01->SetName("QCDScale1in"); g_t01->SetTitle("QCDScale1in in 0 jet bin");
  TGraph* g_t11 = new TGraph(n,X,Y_t11);
 
@@ -141,6 +143,7 @@
  g_t00->SetMarkerColor(kRed);
  g_t00->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t00->Draw("apl");
+ gPad->SetGrid();
 
  TCanvas* c01 = new TCanvas ("c01","c01 QCDscale1in",800,600);
  g_t01->SetMarkerSize(1);
@@ -148,12 +151,14 @@
  g_t01->SetMarkerColor(kRed);
  g_t01->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t01->Draw("apl");
+ gPad->SetGrid();
 
  TCanvas* c11 = new TCanvas ("c11","c11",800,600);
  g_t11->SetMarkerSize(1);
  g_t11->SetMarkerStyle(20);
  g_t11->SetMarkerColor(kRed);
  g_t11->Draw("apl");
+ gPad->SetGrid();
 
  //--------------------------
  TGraph* g_sigma0 = new TGraph(n,X,Y_sigma0);
@@ -164,12 +169,14 @@
  g_sigma0->SetMarkerStyle(20);
  g_sigma0->SetMarkerColor(kRed);
  g_sigma0->Draw("apl");
+ gPad->SetGrid();
 
  TCanvas* csigma1 = new TCanvas ("csigma1","csigma1",800,600);
  g_sigma1->SetMarkerSize(1);
  g_sigma1->SetMarkerStyle(20);
  g_sigma1->SetMarkerColor(kRed);
  g_sigma1->Draw("apl");
+ gPad->SetGrid();
 
  //--------------------------
  TGraph* g_f0 = new TGraph(n,X,Y_f0);
@@ -181,12 +188,14 @@
  g_f0->SetMarkerColor(kRed);
  g_f0->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_f0->Draw("apl");
+ gPad->SetGrid();
 
  TCanvas* cf1 = new TCanvas ("cf1","cf1",800,600);
  g_f1->SetMarkerSize(1);
  g_f1->SetMarkerStyle(20);
  g_f1->SetMarkerColor(kRed);
  g_f1->Draw("apl");
+ gPad->SetGrid();
 
 }
 
