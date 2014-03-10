@@ -97,7 +97,8 @@
   double t12 = pow(k2,-f2/f1);
   double t22 = k2;
 
-  std::cout << " thr = " << threshold << " c0:c1:c2 = (" << c0 << ":" << c1 << ":" << c2 << ")  :: t01 = " << t01 << " t11 = " << t11 << " :: k0 = " << k0 << " k1 = " << k1 << " :: sigma0 = " << sigma0 << " sigma1 = " << sigma1 << " = (" << max_1 << " - " << min_1 << " ) / " << c1 << std::endl;
+  std::cout << " thr = " << threshold << " c0:c1:c2 = (" << c0 << ":" << c1 << ":" << c2 << ")  :: t01 = " << t01 << " t11 = " << t11 ;
+  std::cout << " :: f0 = " << f0 << " :: k0 = " << k0 << " k1 = " << k1 << " :: sigma0 = " << sigma0 << " sigma1 = " << sigma1 << " = (" << max_1 << " - " << min_1 << " ) / " << c1 << std::endl;
   Y_t00[i] = t00;
   Y_t01[i] = t01;
   Y_t11[i] = t11;
