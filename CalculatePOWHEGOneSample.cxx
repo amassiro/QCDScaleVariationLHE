@@ -165,6 +165,8 @@
  TGraph* g_sigma1 = new TGraph(n,X,Y_sigma1);
 
  TCanvas* csigma0 = new TCanvas ("csigma0","csigma0",800,600);
+ g_sigma0->SetTitle("#sigma_{#geq0}");
+ g_sigma0->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_sigma0->SetMarkerSize(1);
  g_sigma0->SetMarkerStyle(20);
  g_sigma0->SetMarkerColor(kRed);
@@ -172,6 +174,8 @@
  gPad->SetGrid();
 
  TCanvas* csigma1 = new TCanvas ("csigma1","csigma1",800,600);
+ g_sigma1->SetTitle("#sigma_{#geq1}");
+ g_sigma1->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_sigma1->SetMarkerSize(1);
  g_sigma1->SetMarkerStyle(20);
  g_sigma1->SetMarkerColor(kRed);
@@ -183,6 +187,7 @@
  TGraph* g_f1 = new TGraph(n,X,Y_f1);
 
  TCanvas* cf0 = new TCanvas ("cf0","cf0",800,600);
+ g_f0->SetTitle("f_{0}");
  g_f0->SetMarkerSize(1);
  g_f0->SetMarkerStyle(20);
  g_f0->SetMarkerColor(kRed);
@@ -191,6 +196,8 @@
  gPad->SetGrid();
 
  TCanvas* cf1 = new TCanvas ("cf1","cf1",800,600);
+ g_f1->SetTitle("f_{1}");
+ g_f1->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_f1->SetMarkerSize(1);
  g_f1->SetMarkerStyle(20);
  g_f1->SetMarkerColor(kRed);
