@@ -275,3 +275,6 @@ Create ntuple:
 
     root -l CalculateAMCATNLOOneSample.cxx
 
+
+    r99t DrawDistributionAMCATNLO.cxx\(\"jetpt1\",200,0,200,\"jetpt1\ [GeV]\"\)
+
