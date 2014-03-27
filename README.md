@@ -273,5 +273,5 @@ Create ntuple:
     ./ntupleMaker.exe  tmp.lhe    fAll_amcatnlo.root  1
     ./ntupleMaker.exe  /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe    fAll_amcatnlo.root  1
 
-
+    root -l CalculateAMCATNLOOneSample.cxx
 
