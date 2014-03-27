@@ -216,3 +216,22 @@ Now:
 
 
 
+# WW MC@NLO
+
+Where:
+
+    /home/amassiro/Generation/QCDScaleVariationLHE/
+
+LHE inputs:
+
+    /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.lhe
+
+Transform the weight to "#" style:
+
+    sed 's:<wgt:#wgt:' < /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.lhe > new.lhe ; cat new.lhe | grep -v "<rwgt>" > two.lhe ; rm new.lhe; mv two.lhe /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe
+
+
+
+    
+
+
