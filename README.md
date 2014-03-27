@@ -216,7 +216,7 @@ Now:
 
 
 
-# WW MC@NLO
+# WW aMC@NLO
 
 Where:
 
@@ -228,10 +228,49 @@ LHE inputs:
 
 Transform the weight to "#" style:
 
-    sed 's:<wgt:#wgt:' < /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.lhe > new.lhe ; cat new.lhe | grep -v "<rwgt>" > two.lhe ; rm new.lhe; mv two.lhe /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe
+    sed 's:<wgt:#wgt:' < /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.lhe > new.lhe ; cat new.lhe | grep -v "<rwgt>" | grep -v "</rwgt>" > two.lhe ; rm new.lhe; mv two.lhe /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe
 
 
 
-    
+Coding:
+
+    <weight id='1001'> muR=0.10000E+01 muF=0.10000E+01 </weight>
+    <weight id='1002'> muR=0.10000E+01 muF=0.20000E+01 </weight>
+    <weight id='1003'> muR=0.10000E+01 muF=0.50000E+00 </weight>
+    <weight id='1004'> muR=0.20000E+01 muF=0.10000E+01 </weight>
+    <weight id='1005'> muR=0.20000E+01 muF=0.20000E+01 </weight>
+    <weight id='1006'> muR=0.20000E+01 muF=0.50000E+00 </weight>
+    <weight id='1007'> muR=0.50000E+00 muF=0.10000E+01 </weight>
+    <weight id='1008'> muR=0.50000E+00 muF=0.20000E+01 </weight>
+    <weight id='1009'> muR=0.50000E+00 muF=0.50000E+00 </weight>
+
+Typical event:
+
+    <wgt id='1001'>  +2.8460099e+00 </wgt>
+    <wgt id='1002'>  +2.1632896e+00 </wgt>
+    <wgt id='1003'>  +3.5138639e+00 </wgt>
+
+How it's going to be:
+
+
+    #new weight,renfact,facfact,pdf1,pdf2  0.663394213531429       0.500000000000000        1.00000000000000            11000       11000  lha
+    #new weight,renfact,facfact,pdf1,pdf2  0.652068114333561        1.00000000000000       0.500000000000000            11000       11000  lha
+    #new weight,renfact,facfact,pdf1,pdf2  0.719963513969510       0.500000000000000       0.500000000000000            11000       11000  lha
+    #new bla                               0.555108255272325        1.00000000000000        2.00000000000000            11000       11000  lha
+
+
+How it really appears:
+
+    #wgt id='1001'>  +2.8460099e+00 </wgt>
+    #wgt id='1002'>  +2.0005984e+00 </wgt>
+    #wgt id='1003'>  +3.8051671e+00 </wgt>
+
+
+
+
+Create ntuple:
+
+    ./ntupleMaker.exe  /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe    fAll_amcatnlo.root
+
 
 

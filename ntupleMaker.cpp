@@ -66,7 +66,7 @@ std::vector <std::string> transform (std::string inUglyList) {
 
 
 
-void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
+void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple, int amcatnloFlag) {
  std::ifstream ifs (fileNameLHE.c_str ()) ;
  LHEF::Reader reader (ifs) ;
 
@@ -83,30 +83,79 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple) {
 
   //----                mu      mu    weight
   std::map < std::pair<float, float>, float > weights;
-  std::vector <std::string> comments_LHE = transform (reader.eventComments);
+  
+  if (amcatnloFlag == 0) {
+   std::vector <std::string> comments_LHE = transform (reader.eventComments);
 
 //   std::cout << " comments_LHE.size() = " << comments_LHE.size() << std::endl;
-  for (unsigned int iComm = 0; iComm < comments_LHE.size(); iComm++) {
+   for (unsigned int iComm = 0; iComm < comments_LHE.size(); iComm++) {
 //    std::cout << " i[" << iComm << "] = " << comments_LHE.at(iComm) << std::endl;
-  }
+   }
   //----                    0 is somethig I don't care:     rwgt            1           3  0.404994932416933         54217137   634096161           0
   //----                    1 is somethig I don't care:     pdf   3 -3 0.21541051E+00 0.32619889E-02 0.21206289E+03 0.12651286E-01 0.93895940E+00
-  for (unsigned int iComm = 2; iComm < comments_LHE.size(); iComm++) {
+   for (unsigned int iComm = 2; iComm < comments_LHE.size(); iComm++) {
   /// #new weight,renfact,facfact,pdf1,pdf2  0.604844179378303       0.500000000000000        1.00000000000000            11000       11000  lha
-   std::stringstream line( comments_LHE.at(iComm) );
-   std::string dummy;
-   line >> dummy; // new
-   line >> dummy; // weight,renfact,facfact,pdf1,pdf2
-   float dummy_float_weight;
-   line >> dummy_float_weight; // 0.604844179378303
-   float dummy_float_mu1;
-   line >> dummy_float_mu1; // 0.500000000000000
+    std::stringstream line( comments_LHE.at(iComm) );
+    std::string dummy;
+    line >> dummy; // new
+    line >> dummy; // weight,renfact,facfact,pdf1,pdf2
+    float dummy_float_weight;
+    line >> dummy_float_weight; // 0.604844179378303
+    float dummy_float_mu1;
+    line >> dummy_float_mu1; // 0.500000000000000
 //    std::cout << " mu1 = " << dummy_float_mu1 << "    ";
-   float dummy_float_mu2;
-   line >> dummy_float_mu2; // 1.00000000000000
+    float dummy_float_mu2;
+    line >> dummy_float_mu2; // 1.00000000000000
 //    std::cout << " mu2 = " << dummy_float_mu2 << std::endl;
-   std::pair <float, float> mumu(dummy_float_mu1,dummy_float_mu2);
-   weights[mumu] = dummy_float_weight;
+    std::pair <float, float> mumu(dummy_float_mu1,dummy_float_mu2);
+    weights[mumu] = dummy_float_weight;
+   }
+  }
+  else {
+   //---- aMC@NLO modified style
+   //   #amcatnlo 1  5  2  2  1 0.34201350e+02 0.34201350e+02 9  0  0 0.99999999e+00 0.65036351e+00 0.14317705e+01 0.00000000e+00 0.00000000e+00
+   //   #wgt id='1001'>  +2.8459606e+00 </wgt>
+   //   #wgt id='1002'>  +3.8907603e+00 </wgt>
+   //
+   //  with this coding:
+   //      <weight id='1001'> muR=0.10000E+01 muF=0.10000E+01 </weight>
+   //      <weight id='1002'> muR=0.10000E+01 muF=0.20000E+01 </weight>
+   //      <weight id='1003'> muR=0.10000E+01 muF=0.50000E+00 </weight>
+   //      <weight id='1004'> muR=0.20000E+01 muF=0.10000E+01 </weight>
+   //      <weight id='1005'> muR=0.20000E+01 muF=0.20000E+01 </weight>
+   //      <weight id='1006'> muR=0.20000E+01 muF=0.50000E+00 </weight>
+   //      <weight id='1007'> muR=0.50000E+00 muF=0.10000E+01 </weight>
+   //      <weight id='1008'> muR=0.50000E+00 muF=0.20000E+01 </weight>
+   //      <weight id='1009'> muR=0.50000E+00 muF=0.50000E+00 </weight>
+   std::vector <std::string> comments_LHE = transform (reader.eventComments);
+   for (unsigned int iComm = 0; iComm < comments_LHE.size(); iComm++) {
+//    std::cout << " i[" << iComm << "] = " << comments_LHE.at(iComm) << std::endl;
+   }
+  //----                    0 is somethig I don't care:     #amcatnlo 1  5  2  2  1 0.34201350e+02 0.34201350e+02 9  0  0 0.99999999e+00
+   for (unsigned int iComm = 1; iComm < comments_LHE.size(); iComm++) {
+  /// #new weight,renfact,facfact,pdf1,pdf2  0.604844179378303       0.500000000000000        1.00000000000000            11000       11000  lha
+    /// #wgt id='1002'>  +3.8907603e+00
+    std::stringstream line( comments_LHE.at(iComm) );
+    std::string dummy;
+    line >> dummy; // wgt
+    line >> dummy; // id='1002'
+    float dummy_float_mu1;
+    float dummy_float_mu2;
+    if (dummy == "id='1001'") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 1.; } 
+    if (dummy == "id='1002'") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 2.; } 
+    if (dummy == "id='1003'") { dummy_float_mu1 = 1.;  dummy_float_mu2 = .0; } 
+    if (dummy == "id='1004'") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 1.; } 
+    if (dummy == "id='1005'") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 2.; } 
+    if (dummy == "id='1006'") { dummy_float_mu1 = .5;  dummy_float_mu2 = .5; } 
+    if (dummy == "id='1007'") { dummy_float_mu1 = .5;  dummy_float_mu2 = 1.; } 
+    if (dummy == "id='1008'") { dummy_float_mu1 = .5;  dummy_float_mu2 = 2.; } 
+    if (dummy == "id='1009'") { dummy_float_mu1 = .5;  dummy_float_mu2 = .5; } 
+    float dummy_float_weight;
+    line >> dummy_float_weight; // +3.8907603e+00
+    std::pair <float, float> mumu(dummy_float_mu1,dummy_float_mu2);
+    weights[mumu] = dummy_float_weight;
+   }
+
   }
 
 
@@ -231,7 +280,13 @@ int main (int argc, char **argv) {
  std::cout << " Input  LHE  =" << argv[1] << std::endl;
  std::cout << " Output ROOT =" << argv[2] << std::endl;
 
- 
+ int amcatnloFlag = 0;
+ if (argc > 3) {
+  amcatnloFlag = atoi(argv[3]);
+  std::cout << " Input  amcatnloFlag  =" << amcatnloFlag << std::endl;
+ }
+
+
  const int SUBSET = 0 ;
  const std::string NAME = "cteq6ll" ; //"cteq6l1"
 
@@ -243,7 +298,7 @@ int main (int argc, char **argv) {
 
 //  TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:pt1:pt2");
  TNtuple ntu ("ntu", "ntu", "jetpt1:jetpt2:w00:w10:w01:w12:w21:w22:w11");
- fillNtuple (argv[1], ntu) ;
+ fillNtuple (argv[1], ntu, amcatnloFlag) ;
 
  TFile output (argv[2], "recreate") ;
  output.cd() ;
