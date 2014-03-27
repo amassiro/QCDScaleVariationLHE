@@ -138,21 +138,26 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple, int amcatnloFlag) {
     std::stringstream line( comments_LHE.at(iComm) );
     std::string dummy;
     line >> dummy; // wgt
-    line >> dummy; // id='1002'
-    float dummy_float_mu1;
-    float dummy_float_mu2;
-    if (dummy == "id='1001'") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 1.; } 
-    if (dummy == "id='1002'") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 2.; } 
-    if (dummy == "id='1003'") { dummy_float_mu1 = 1.;  dummy_float_mu2 = .0; } 
-    if (dummy == "id='1004'") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 1.; } 
-    if (dummy == "id='1005'") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 2.; } 
-    if (dummy == "id='1006'") { dummy_float_mu1 = .5;  dummy_float_mu2 = .5; } 
-    if (dummy == "id='1007'") { dummy_float_mu1 = .5;  dummy_float_mu2 = 1.; } 
-    if (dummy == "id='1008'") { dummy_float_mu1 = .5;  dummy_float_mu2 = 2.; } 
-    if (dummy == "id='1009'") { dummy_float_mu1 = .5;  dummy_float_mu2 = .5; } 
+    line >> dummy; // id='1002'>
+    float dummy_float_mu1 = 0;
+    float dummy_float_mu2 = 0;
+//     std::cout << " dummy = " << dummy << " is = to " << "id=\'1001\'" << std::endl;
+    if (dummy == "id=\'1001\'>") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 1.; } 
+    if (dummy == "id=\'1002\'>") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 2.; } 
+    if (dummy == "id=\'1003\'>") { dummy_float_mu1 = 1.;  dummy_float_mu2 = .0; } 
+    if (dummy == "id=\'1004\'>") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 1.; } 
+    if (dummy == "id=\'1005\'>") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 2.; } 
+    if (dummy == "id=\'1006\'>") { dummy_float_mu1 = .5;  dummy_float_mu2 = .5; } 
+    if (dummy == "id=\'1007\'>") { dummy_float_mu1 = .5;  dummy_float_mu2 = 1.; } 
+    if (dummy == "id=\'1008\'>") { dummy_float_mu1 = .5;  dummy_float_mu2 = 2.; } 
+    if (dummy == "id=\'1009\'>") { dummy_float_mu1 = .5;  dummy_float_mu2 = .5; } 
     float dummy_float_weight;
     line >> dummy_float_weight; // +3.8907603e+00
     std::pair <float, float> mumu(dummy_float_mu1,dummy_float_mu2);
+//     std::cout << " mu1 = " << dummy_float_mu1 << "    ";
+//     std::cout << " mu2 = " << dummy_float_mu2 << "    ";
+//     std::cout << " dummy_float_weight = " << dummy_float_weight << "    ";
+//     std::cout << std::endl;
     weights[mumu] = dummy_float_weight;
    }
 

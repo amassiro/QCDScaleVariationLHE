@@ -228,7 +228,7 @@ LHE inputs:
 
 Transform the weight to "#" style:
 
-    sed 's:<wgt:#wgt:' < /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.lhe > new.lhe ; cat new.lhe | grep -v "<rwgt>" | grep -v "</rwgt>" > two.lhe ; rm new.lhe; mv two.lhe /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe
+    sed 's:<wgt:#wgt:' < /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.lhe > new.lhe ; cat new.lhe | grep -v "<rwgt>" | grep -v "</rwgt>" | grep -v "<initrwgt>" | grep -v "</initrwgt>" > two.lhe ; rm new.lhe; mv two.lhe /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe
 
 
 
@@ -270,7 +270,8 @@ How it really appears:
 
 Create ntuple:
 
-    ./ntupleMaker.exe  /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe    fAll_amcatnlo.root
+    ./ntupleMaker.exe  tmp.lhe    fAll_amcatnlo.root  1
+    ./ntupleMaker.exe  /data/amassiro/CMSSWLHE/WWaMCatNLO/140310_WW0j_deacy_2l2n.modified.lhe    fAll_amcatnlo.root  1
 
 
 
