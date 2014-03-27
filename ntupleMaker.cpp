@@ -144,7 +144,7 @@ void fillNtuple (std::string fileNameLHE,  TNtuple & ntuple, int amcatnloFlag) {
 //     std::cout << " dummy = " << dummy << " is = to " << "id=\'1001\'" << std::endl;
     if (dummy == "id=\'1001\'>") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 1.; } 
     if (dummy == "id=\'1002\'>") { dummy_float_mu1 = 1.;  dummy_float_mu2 = 2.; } 
-    if (dummy == "id=\'1003\'>") { dummy_float_mu1 = 1.;  dummy_float_mu2 = .0; } 
+    if (dummy == "id=\'1003\'>") { dummy_float_mu1 = 1.;  dummy_float_mu2 = .5; } 
     if (dummy == "id=\'1004\'>") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 1.; } 
     if (dummy == "id=\'1005\'>") { dummy_float_mu1 = 2.;  dummy_float_mu2 = 2.; } 
     if (dummy == "id=\'1006\'>") { dummy_float_mu1 = .5;  dummy_float_mu2 = .5; } 
