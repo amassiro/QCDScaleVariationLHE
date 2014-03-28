@@ -26,11 +26,11 @@ void DrawDistribution(std::string var = "jetpt1", int NBIN = 1000, int MIN = 0, 
  h_e0_CMS->SetLineWidth(2);
  h_e0_CMS->SetLineColor(kRed);
  h_e0_CMS->GetXaxis()->SetTitle(varHR.c_str());
- h_e0_CMS->GetYaxis()->SetTitle("evetns");
+ h_e0_CMS->GetYaxis()->SetTitle("events");
 
 
  TLegend* leg = new TLegend(0.5,0.7,0.9,0.9);
- leg->AddEntry(h_e0_CMS,"CMS tune","lp");
+ leg->AddEntry(h_e0_CMS,"CMS POWHEG","lp");
  leg->SetFillColor(0);
 
  TCanvas* cn = new TCanvas ("cn","cn",800,600);
