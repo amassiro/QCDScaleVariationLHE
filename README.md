@@ -278,3 +278,11 @@ Create ntuple:
 
     r99t DrawDistributionAMCATNLO.cxx\(\"jetpt1\",200,0,200,\"jetpt1\ [GeV]\"\)
 
+
+# WW aMC@NLO and POWHEG
+
+
+    r99t DrawDistributionAMCATNLOPOWHEG.cxx\(\"jetpt1\",200,0,200,\"jetpt1\ [GeV]\"\)
+    r99t DrawDistributionAMCATNLOPOWHEG.cxx\(\"jetpt1\",200,0,400,\"jetpt1\ [GeV]\"\)
+    r99t DrawDistributionAMCATNLOPOWHEG.cxx\(\"jetpt1\",200,0,800,\"jetpt1\ [GeV]\"\)
+
