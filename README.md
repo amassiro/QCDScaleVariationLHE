@@ -297,5 +297,6 @@ Use the hadronized events for UEPS nuisance
     cmsenv
     cmsRun gendumper_cfg.py   inputFiles=file:/tmp/amassiro/WW1Mevents_TUNE_CMS.root             outputFile=/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST.root
 
-Run plot
-    
+Run plot:
+
+    root -l CalculateAMCATNLOOneSampleAtGenLevel.cxx
