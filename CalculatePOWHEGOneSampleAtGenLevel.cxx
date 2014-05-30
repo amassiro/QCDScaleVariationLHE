@@ -115,7 +115,7 @@
  // theta
   double t00 = pow(k0,1./f0);
   double t01 = pow(k1,-(f1+f2)/f0);
-  double t11 = pow(k1,(f1+f2)/f1);
+  double t11 = pow(k1,-(f1+f2)/f1);
   double t12 = pow(k2,-f2/f1);
   double t22 = k2;
 
@@ -182,6 +182,8 @@
  g_t00->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t00->Draw("apl");
  gPad->SetGrid();
+ c00->SaveAs("c00.png");
+ c00->SaveAs("c00.pdf");
 
  TCanvas* c01 = new TCanvas ("c01","c01 QCDscale1in",800,600);
  g_t01->SetMarkerSize(1);
@@ -190,6 +192,8 @@
  g_t01->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t01->Draw("apl");
  gPad->SetGrid();
+ c01->SaveAs("c01.png");
+ c01->SaveAs("c01.pdf");
 
  TCanvas* c11 = new TCanvas ("c11","c11",800,600);
  g_t11->SetMarkerSize(1);
@@ -198,6 +202,8 @@
  g_t11->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t11->Draw("apl");
  gPad->SetGrid();
+ c11->SaveAs("c11.png");
+ c11->SaveAs("c11.pdf");
 
  TCanvas* c12 = new TCanvas ("c12","c12",800,600);
  g_t12->SetMarkerSize(1);
@@ -206,6 +212,8 @@
  g_t12->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t12->Draw("apl");
  gPad->SetGrid();
+ c12->SaveAs("c12.png");
+ c12->SaveAs("c12.pdf");
 
  TCanvas* c22 = new TCanvas ("c22","c22",800,600);
  g_t22->SetMarkerSize(1);
@@ -214,6 +222,8 @@
  g_t22->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t22->Draw("apl");
  gPad->SetGrid();
+ c22->SaveAs("c22.png");
+ c22->SaveAs("c22.pdf");
 
  //--------------------------
  TGraph* g_sigma0 = new TGraph(n,X,Y_sigma0);
