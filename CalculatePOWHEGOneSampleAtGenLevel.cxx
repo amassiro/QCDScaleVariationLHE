@@ -125,6 +125,7 @@
   std::cout << " " << threshold << " &   " << f0 << "  & " << f1 << "  & " << f2 << "  & ";
   std::cout << sigma0 << "  & ";
   std::cout << sigma1 << "  & ";
+  std::cout << sigma2 << "  & ";
   std::cout << t00 << "  & ";
   std::cout << t01 << "  & ";
   std::cout << t11 << "  & ";
