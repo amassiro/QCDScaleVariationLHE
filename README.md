@@ -286,3 +286,16 @@ Create ntuple:
     r99t DrawDistributionAMCATNLOPOWHEG.cxx\(\"jetpt1\",200,0,400,\"jetpt1\ [GeV]\"\)
     r99t DrawDistributionAMCATNLOPOWHEG.cxx\(\"jetpt1\",200,0,800,\"jetpt1\ [GeV]\"\)
 
+
+
+Comparison at GEN level after hadronization
+####
+
+Use the hadronized events for UEPS nuisance
+
+    eos cp /eos/cms/store/user/amassiro/WW/GEN/WW1Mevents_TUNE_CMS.root       /tmp/amassiro/
+    cmsenv
+    cmsRun gendumper_cfg.py   inputFiles=file:/tmp/amassiro/WW1Mevents_TUNE_CMS.root             outputFile=/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST.root
+
+Run plot
+    
