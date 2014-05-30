@@ -293,10 +293,19 @@ Comparison at GEN level after hadronization
 
 Use the hadronized events for UEPS nuisance
 
+    cd /home/amassiro/Generation/UEPS/CMSSW_5_3_14_patch2/src/UEPS/GenDumper/test/
     eos cp /eos/cms/store/user/amassiro/WW/GEN/WW1Mevents_TUNE_CMS.root       /tmp/amassiro/
     cmsenv
     cmsRun gendumper_cfg.py   inputFiles=file:/tmp/amassiro/WW1Mevents_TUNE_CMS.root             outputFile=/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST.root
+    cd /home/amassiro/Generation/QCDScaleVariationLHE/
+
+Run calculation:
+
+    root -l CalculatePOWHEGOneSampleAtGenLevel.cxx
 
 Run plot:
 
-    root -l CalculateAMCATNLOOneSampleAtGenLevel.cxx
+    r99t DrawDistributionAtGen.cxx\(\"jetpt1\",200,0,200,\"jetpt1\ [GeV]\"\)
+
+
+

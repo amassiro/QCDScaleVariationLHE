@@ -1,9 +1,9 @@
 {
  #include <algorithm>
 
- TFile* f = new TFile ("fAll.root");
+ TFile* f = new TFile ("/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST_2.root");
 
- TTree* t = (TTree*) f -> Get ("ntu");
+ TTree* t = (TTree*) f -> Get ("Analyzer/myTree");
 
  Double_t X[200];
  Double_t Y_f0[200];
