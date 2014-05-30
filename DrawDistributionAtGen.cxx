@@ -9,7 +9,7 @@ void DrawDistributionAtGen(std::string var = "jetpt1", int NBIN = 1000, int MIN 
  gStyle->SetOptStat(0);
 
 
- TFile* fCMS   = new TFile ("/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST_2.root");
+ TFile* fCMS   = new TFile ("/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST.root");
 
  TTree* tCMS   =  (TTree*) fCMS   -> Get ("Analyzer/myTree");
 

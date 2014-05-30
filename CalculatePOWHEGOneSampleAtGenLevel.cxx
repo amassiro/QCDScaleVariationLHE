@@ -1,7 +1,7 @@
 {
  #include <algorithm>
 
- TFile* f = new TFile ("/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST_2.root");
+ TFile* f = new TFile ("/tmp/amassiro/WW1Mevents_TUNE_CMS_dump_tree_TEST.root");
 
  TTree* t = (TTree*) f -> Get ("Analyzer/myTree");
 
@@ -15,6 +15,11 @@
  Double_t Y_sigma1[200];
  Double_t Y_error_0jet[200];
  Double_t Y_error_sigma_0jet[200];
+
+ Double_t Y_t12[200];
+ Double_t Y_t22[200];
+
+
  TH1F htemp("htemp","htemp",10,0,2);
 
  t->Draw("1 >> htemp","w00","goff");  std::cout << " total Events: 0505 = " << htemp->Integral() << std::endl;
@@ -80,10 +85,27 @@
   float max_1 = *std::max_element(xsec_1,xsec_1+7);
 
 
+  //---- >= 2 jets
+
+  float xsec_2[100];
+
+  s00 = Form ("(%s) * w00",s2.Data());  t->Draw("1 >> htemp",s00.Data(),"goff");  xsec_2[0] = htemp->Integral();
+  s01 = Form ("(%s) * w01",s2.Data());  t->Draw("1 >> htemp",s01.Data(),"goff");  xsec_2[1] = htemp->Integral();
+  s10 = Form ("(%s) * w10",s2.Data());  t->Draw("1 >> htemp",s10.Data(),"goff");  xsec_2[2] = htemp->Integral();
+  s12 = Form ("(%s) * w12",s2.Data());  t->Draw("1 >> htemp",s12.Data(),"goff");  xsec_2[3] = htemp->Integral();
+  s21 = Form ("(%s) * w21",s2.Data());  t->Draw("1 >> htemp",s21.Data(),"goff");  xsec_2[4] = htemp->Integral();
+  s22 = Form ("(%s) * w22",s2.Data());  t->Draw("1 >> htemp",s22.Data(),"goff");  xsec_2[5] = htemp->Integral();
+
+  s11 = Form ("(%s) * w11",s2.Data());  t->Draw("1 >> htemp",s11.Data(),"goff");  xsec_2[6] = htemp->Integral();
+
+
+  float min_2 = *std::min_element(xsec_2,xsec_2+7);
+  float max_2 = *std::max_element(xsec_2,xsec_2+7);
+
 
   double sigma0 = 0.5 * abs(max_0-min_0) / c0;
   double sigma1 = 0.5 * abs(max_1-min_1) / c1;
-  double sigma2 = 0.;
+  double sigma2 = 0.5 * abs(max_2-min_2) / c2;
 
  // k = exp (sigma)
   double k0 = exp(sigma0);
@@ -93,23 +115,28 @@
  // theta
   double t00 = pow(k0,1./f0);
   double t01 = pow(k1,-(f1+f2)/f0);
-  double t11 = pow(k1,(f1+f2)/f0);
+  double t11 = pow(k1,(f1+f2)/f1);
   double t12 = pow(k2,-f2/f1);
   double t22 = k2;
 
 //   std::cout << " thr = " << threshold << " c0:c1:c2 = (" << c0 << ":" << c1 << ":" << c2 << ")  :: t00 = " << t00 << ":: t01 = " << t01  << " t11 = " << t11 ;
 //   std::cout << " :: f0 = " << f0 << " :: k0 = " << k0 << " k1 = " << k1 << " :: sigma0 = " << sigma0 << " sigma1 = " << sigma1 << " = (" << max_1 << " - " << min_1 << " ) / " << c1 << std::endl;
 
-  std::cout << " " << threshold << " &   " << f0 << "  & " << f1 << "  & ";
+  std::cout << " " << threshold << " &   " << f0 << "  & " << f1 << "  & " << f2 << "  & ";
   std::cout << sigma0 << "  & ";
   std::cout << sigma1 << "  & ";
   std::cout << t00 << "  & ";
-  std::cout << t01 << "  \\\\";
+  std::cout << t01 << "  & ";
+  std::cout << t11 << "  & ";
+  std::cout << t12 << "  & ";
+  std::cout << t22 << "  \\\\";
   std::cout << std::endl;
 
   Y_t00[i] = t00;
   Y_t01[i] = t01;
   Y_t11[i] = t11;
+  Y_t12[i] = t12;
+  Y_t22[i] = t22;
   Y_error_0jet[i] = 1. - Y_t01[i];
   Y_sigma0[i] = sigma0;
   Y_sigma1[i] = sigma1;
@@ -144,7 +171,9 @@
  //--------------------------
  TGraph* g_t00 = new TGraph(n,X,Y_t00); g_t00->SetName("QCDScale");    g_t00->SetTitle("QCDScale in 0 jet bin");
  TGraph* g_t01 = new TGraph(n,X,Y_t01); g_t01->SetName("QCDScale1in"); g_t01->SetTitle("QCDScale1in in 0 jet bin");
- TGraph* g_t11 = new TGraph(n,X,Y_t11);
+ TGraph* g_t11 = new TGraph(n,X,Y_t11); g_t11->SetName("QCDScale1in1"); g_t11->SetTitle("QCDScale1in in 1 jet bin");
+ TGraph* g_t12 = new TGraph(n,X,Y_t12); g_t12->SetName("QCDScale2in1"); g_t12->SetTitle("QCDScale2in in 1 jet bin");
+ TGraph* g_t22 = new TGraph(n,X,Y_t22); g_t22->SetName("QCDScale2in2"); g_t22->SetTitle("QCDScale2in in 2 jet bin");
 
  TCanvas* c00 = new TCanvas ("c00","c00 QCDscale",800,600);
  g_t00->SetMarkerSize(1);
@@ -166,7 +195,24 @@
  g_t11->SetMarkerSize(1);
  g_t11->SetMarkerStyle(20);
  g_t11->SetMarkerColor(kRed);
+ g_t11->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
  g_t11->Draw("apl");
+ gPad->SetGrid();
+
+ TCanvas* c12 = new TCanvas ("c12","c12",800,600);
+ g_t12->SetMarkerSize(1);
+ g_t12->SetMarkerStyle(20);
+ g_t12->SetMarkerColor(kRed);
+ g_t12->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
+ g_t12->Draw("apl");
+ gPad->SetGrid();
+
+ TCanvas* c22 = new TCanvas ("c22","c22",800,600);
+ g_t22->SetMarkerSize(1);
+ g_t22->SetMarkerStyle(20);
+ g_t22->SetMarkerColor(kRed);
+ g_t22->GetXaxis()->SetTitle("jet p_{T} threshold [GeV]");
+ g_t22->Draw("apl");
  gPad->SetGrid();
 
  //--------------------------
